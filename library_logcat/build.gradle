@@ -1,0 +1,68 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+android {
+
+    // 资源前缀限制
+    resourcePrefix "logcat_"
+
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 16
+        versionCode 1060
+        versionName "10.6"
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    android.libraryVariants.all { variant ->
+        // aar 输出文件名配置
+        variant.outputs.all { output ->
+            outputFileName = "${rootProject.name}-${android.defaultConfig.versionName}.aar"
+        }
+    }
+}
+
+afterEvaluate {
+    // 排除 BuildConfig.class
+    generateReleaseBuildConfig.enabled = false
+    generateDebugBuildConfig.enabled = false
+}
+
+dependencies {
+    // noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.0.0'
+    // noinspection GradleCompatible
+    implementation 'com.android.support:design:26.0.0'
+    // 悬浮窗框架：https://github.com/getActivity/XToast
+    implementation 'com.github.getActivity:XToast:8.5'
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
