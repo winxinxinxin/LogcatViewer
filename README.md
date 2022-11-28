@@ -11,7 +11,6 @@ open logcatActivity in app to show log
 
 ```groovy
     repositories {
-    // JitPack 远程仓库：https://jitpack.io
     maven { url 'https://jitpack.io' }
 }
 ```
@@ -20,7 +19,8 @@ open logcatActivity in app to show log
 
 ```groovy
 dependencies {
-    debugImplementation 'com.github.getActivity:Logcat:10.8'
+    debugImplementation 'com.github.winxinxinxin:LogcatViewer:Tag'
+    implementation 'com.github.getActivity:XToast:8.5'
 }
 ```
 

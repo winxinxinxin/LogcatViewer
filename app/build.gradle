@@ -36,4 +36,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     api project(':library_logcat')
+
+//    implementation 'com.github.winxinxinxin:LogcatViewer:1.0'
+//    implementation 'com.github.getActivity:XToast:8.5'
+
 }
